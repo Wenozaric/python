@@ -21,29 +21,41 @@ def findS(currentOne, currentTwo, step):
         
 print(findS(17, 'x', 0))
 
-from functools import lru_cache
+secondSet = set()
 
-@lru_cache(None)
-def game(a, b):
-    if a + b >= 211: 
-        return 'END'
-    moves = [
-        game(a + 1, b),  # +1 в первую кучу
-        game(a * 2, b),  # *2 в первую кучу
-        game(a, b + 1),  # +1 во вторую кучу
-        game(a, b * 2)   # *2 во вторую кучу
-    ]
-    if 'END' in moves: 
-        return 'В1'
-    if all(m == 'В1' for m in moves): 
-        return 'П1'
-    if 'П1' in moves: 
-        return 'В2'
-    if all(m in ('В1', 'В2') for m in moves): 
-        return 'П2'
+def isValid(array):
+    a1 = array[0] + array[1] + 1
+    a2 = array[0] * 2 + array[1]
+    a3 = array[0] + array[1] * 2
+    if a1 < 207 and a2 < 207 and a3 < 207: return False
+    return True 
+
+def getOtherVariants(currentOne, currentTwo):
+    a1 = [currentOne + 1, currentTwo]
+    a2 = [currentOne * 2, currentTwo]
+    a3 = [currentOne, currentTwo + 1]
+    a4 = [currentOne, currentTwo * 2]
+    if sum(a1) < 207 and sum(a2) < 207 and sum(a3) < 207 and sum(a4) < 207: return [a1, a2, a3, a4]
+    return []
+
+def game(currentOne, currentTwo, step, baseS):
+    if step == 1 and (currentOne + currentTwo < 207):
+        isPosibileVariant = True
+        b = getOtherVariants(currentOne, currentTwo)
+        if len(b) > 0:
+            for variant in b:
+                if isValid(variant) == False: isPosibileVariant = False
+            if isPosibileVariant: secondSet.add(baseS)
+        return None
+    if( step < 1):
+        game(currentOne + 1, currentTwo, step + 1, baseS)
+        game(currentOne * 2, currentTwo, step + 1, baseS)
+        game(currentOne, currentTwo + 1, step + 1, baseS)
+        game(currentOne, currentTwo * 2, step + 1, baseS)
     
+    return None
 
-for s in range(2, 194):
-    res = game(17, s)
-    if res in ('П1', 'В2', 'П2'):
-        print(f"S = {s}: {res}")
+for x in range(1, 190):
+    game(17, x, 0, x)
+
+print(secondSet)
