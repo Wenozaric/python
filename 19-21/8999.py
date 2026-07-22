@@ -1,25 +1,27 @@
 from functools import lru_cache
 import math
+
+
 issueOne = set()
 
-
 @lru_cache
-def findS(currentOne, currentTwo, step):
-    if( step == 2):
-        target = 211 - currentOne
-        currentTwo = currentTwo[::-1]
-        for index in range(len(currentTwo)):
-            if(currentTwo[index] == '*'): target = math.ceil(target / 2)
-            if(currentTwo[index] == '+'): target -= 1
-        issueOne.add(target)
-    else:
-        findS(currentOne + 1, currentTwo, step + 1)
-        findS(currentOne * 2, currentTwo, step + 1)
-        findS(currentOne, currentTwo + '+', step + 1)
-        findS(currentOne, currentTwo + '*', step + 1)
-    return issueOne
+def findS(currentOne, currentTwo, step, baseS):
+    if step == 1:
+        if (currentOne + currentTwo) >= 207: return None
+        a1 = currentOne + 1 + currentTwo
+        a2 = currentOne * 2 + currentTwo
+        a3 = currentOne + currentTwo * 2
+        if a1 >= 207 or a2 >= 207 or a3 >= 207:
+            issueOne.add(baseS)
+    if step < 2:
+        findS(currentOne + 1, currentTwo, step + 1, baseS)
+        findS(currentOne * 2, currentTwo, step + 1, baseS)
+        findS(currentOne, currentTwo + 1, step + 1, baseS)
+        findS(currentOne, currentTwo * 2, step + 1, baseS)
         
-print(findS(17, 'x', 0))
+for x in range(0, 190):
+    findS(17, x, 0, x)
+print(min(issueOne))
 
 secondSet = set()
 
