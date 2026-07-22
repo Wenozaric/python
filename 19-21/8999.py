@@ -59,3 +59,35 @@ for x in range(1, 190):
     game(17, x, 0, x)
 
 print(secondSet)
+
+
+def moves(boulders):
+    p1, p2 = boulders
+    return [(p1 + 1, p2), (p1 * 2, p2), (p1, p2 + 1), (p1, p2 * 2)]
+
+@lru_cache(None)
+def game(boulders):
+    p1, p2 = boulders
+    if p1 + p2 >= 207:
+        return 'win'
+        
+    next = [game(m) for m in moves(boulders)]
+    
+    if 'win' in next:
+        return 'petya1'
+    
+    if all(m == 'petya1' for m in next):
+        return 'vanya1'
+
+    if 'vanya1' in next:
+        return 'petya2'
+
+    if all(m == 'petya1' or m == 'petya2' for m in next):
+        return 'vanya2'
+
+d = []
+for s in range(1, 190):
+    if game((17, s)) == 'vanya2':
+        d.append(s)
+
+print(d)
