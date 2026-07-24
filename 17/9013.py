@@ -5,23 +5,18 @@ b = [int(x) for x in a]
 
 d = []
 
-def checkNum(num):
+def isPrime(num):
     if num < 2: return 0
     for x in range(2, isqrt(num) + 1):
         if num % x == 0: return 0
     return 1
 
 for index in range(len(b) - 3):
-    a1 = b[index]
-    a2 = b[index + 1]
-    a3 = b[index + 2]
-    a4 = b[index + 3]
+    a1, a2, a3, a4 = b[index: index + 4]
 
     if 255 >= a1 >= 0 and 255 >= a2 >= 0 and 255 >= a3 >= 0 and 255 >= a4 >= 0:
-        countNum = a1.bit_count() + a2.bit_count() + a3.bit_count() + a4.bit_count()
-        total = a1 + a2 + a3 + a4
-        if checkNum(countNum) == 1:
-           d.append(total)
+        countPrime = isPrime(a1) + isPrime(a2) + isPrime(a3) + isPrime(a4)
+        if countPrime == 2: d.append(a1 + a2 + a3 + a4)
 
 print(len(d))
 print(max(d))
