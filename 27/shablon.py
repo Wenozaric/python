@@ -3,7 +3,7 @@ from math import dist
 data = []
 
 for i in open('???'):
-    x, y = [float(j) for j in i.replace(',',  '.'.split())]
+    x, y = [float(j) for j in i.replace(',',  '.').split()]
     data.append([x, y])
 
 clasters = []
