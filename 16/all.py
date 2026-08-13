@@ -3,7 +3,8 @@ def runTest(myValue, mustValue, issue):
     else: print(f"-- {issue} -- Ответ неверный, равен {myValue}, должен {mustValue} ❌")
 
 import sys
-sys.setrecursionlimit(10000)
+sys.setrecursionlimit(15000)
+
 
 def a9154():
     s = {}
@@ -27,5 +28,24 @@ def a9152():
 
     return f[548]
 
-runTest(a9154(), 37861, 9154)
-runTest(a9152(), 50, 9152)
+def a8926():
+    def f(n):
+        if n >= 40000:
+            return 2 * n + f(n - 7)
+        else:
+            return 4 * n + g(n - 5)
+        
+    def g(n):
+        if n >= 40000:
+            return (n - 7) ** 2
+        else:
+            return 8 + n + g(n + 8)
+
+    return f(54321)
+
+#def a8925():
+
+
+#runTest(a9154(), 37861, 9154)
+#runTest(a9152(), 50, 9152)
+runTest(a8926(), 1792793065, 8926)
