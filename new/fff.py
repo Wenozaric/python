@@ -121,17 +121,40 @@
 
 # print(maxRepeating('ababc', 'ab'))
 
-def getLongestSubsequence(words, groups):
-    if len(groups) < 1: return 1
-    d = [[] for _ in range(len(groups))]
-    for i in range(len(groups)):
-        best_prev = []
-        for k in range(0, i):
-            if groups[i] != groups[k]:
-                if len(best_prev) < len(d[k]): best_prev = d[k]
-        d[i] = best_prev + [words[i]]
+# def getLongestSubsequence(words, groups):
+#     if len(groups) < 1: return 1
+#     d = [[] for _ in range(len(groups))]
+#     for i in range(len(groups)):
+#         best_prev = []
+#         for k in range(0, i):
+#             if groups[i] != groups[k]:
+#                 if len(best_prev) < len(d[k]): best_prev = d[k]
+#         d[i] = best_prev + [words[i]]
 
-    return max(d, key = len)
+#     return max(d, key = len)
 
-print(getLongestSubsequence(["a","b","c","d"], [1,0,1,1]))
-print(getLongestSubsequence(["d"], [1]))
+# print(getLongestSubsequence(["a","b","c","d"], [1,0,1,1]))
+# print(getLongestSubsequence(["d"], [1]))
+
+
+# def fuctor(n):
+#     d = 2
+#     res = []
+
+#     while d ** 2 <= n:
+#         if n % d == 0:
+#             res.append(d)
+#             n //= d
+#         else:
+#             d += 1
+#     if n > 1:
+#         res.append(n)
+#     return res
+
+# print(fuctor(24))
+    
+
+# n = 1
+# for x in range(n, 10):
+#     print(bin(2 ** n + 1)[2:])
+#     n += 1
